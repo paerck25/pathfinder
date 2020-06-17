@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .grid {
+            margin: 0;
+            padding: 0;
+            border: none;
+            outline: 1px solid #000;
+            display: inline-block;
+            width: 32px;
+            height: 32px;
+        }
+
+        #container {
+            position: relative;
+            top: 30px;
+            outline: 2px solid #000;
+            font-size: 0;
+            margin: auto;
+            height: 640px;
+            width: 1280px;
+            padding: 0;
+            border: none;
+        }
+
+        .center{
+            text-align: center;
+        }
+        .searchPath{
+            background-color: skyblue;
+        }
+        .path{
+            background-color: blue;
+        }
+        .wall{
+            background-color: black;
+        }
+        .startPoint{
+            background-color: green;
+        }
+        .endPoint{
+            background-color: red;
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <div class="center">
+        <h1>A* algorithm</h1>
+        <button id="button1">위치변경</button>
+        <button id="button3">랜덤 벽 생성</button>
+        <button id="button2">시작</button>
+    </div>
+    <div id="container"></div>
+    <script src="grid.js"></script>
+</body>
+
+</html>
