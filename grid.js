@@ -367,7 +367,6 @@ function searchStart() {
 document.getElementById('button1').addEventListener('click', RandomPosition)
 document.getElementById('button2').addEventListener('click', searchStart)
 document.getElementById('button3').addEventListener('click', createRandomWall)
-document.getElementById('button4').addEventListener('click', clearInterval(stopInterval))
 
 function init() {
     createGrid(20, 40);
