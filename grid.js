@@ -39,6 +39,17 @@ function createGrid(x, y) {
     };
 };
 
+function defaultWall() {
+    for (let x = 0; x < 80; x++) {
+        arr[0][x].classList.add('wall');
+        arr[39][x].classList.add('wall');
+    }
+    for (let i = 0; i < 40; i++) {
+        arr[i][0].classList.add('wall');
+        arr[i][79].classList.add('wall');
+    }
+}
+
 
 function setStartPoint(x, y) {
     start = arr[x][y];
@@ -58,48 +69,7 @@ function RandomPosition() {
     resetPoint();
     setStartPoint(x1, y1);
     setEndPoint(x2, y2);
-    console.log(x1, y1, x2, y2);
 }
-
-
-function moveRight() {
-    console.log('moveRight');
-    y1++
-}
-function moveLeft() {
-    console.log('moveLeft');
-    y1--
-}
-function moveUp() {
-    console.log('moveUp');
-    x1--
-}
-function moveDown() {
-    console.log('moveDown');
-    x1++
-}
-
-function moveRightUp() {
-    console.log('moveRightUp');
-    y1++
-    x1--
-}
-function moveLeftDown() {
-    console.log('moveLeftDown');
-    y1--
-    x1++
-}
-function moveLeftUp() {
-    console.log('moveLeftUp');
-    x1--
-    y1--
-}
-function moveRightDown() {
-    console.log('moveRightDown');
-    x1++
-    y1++
-}
-
 
 function createRandomWall() {
     for (let j = 0; j < 5; j++) {
@@ -141,8 +111,8 @@ function searchOfArrayObj(ary, item1) {
 
 
 function resetPoint() {
-    for (let hang = 0; hang < 40; hang++) {
-        for (let ryul = 0; ryul < 80; ryul++) {
+    for (let hang = 1; hang < 39; hang++) {
+        for (let ryul = 1; ryul < 79; ryul++) {
             arr[hang][ryul].classList.remove('startPoint');
             arr[hang][ryul].classList.remove('endPoint');
             arr[hang][ryul].classList.remove('wall');
@@ -173,16 +143,16 @@ function findPath() {
             pathList.push(currentNode);
         }
 
-        let rightNode = { node: arr[currentNode.x][currentNode.y + 1], x: currentNode.x, y: currentNode.y + 1, f: currentNode.g + 10 + huristic(currentNode.x, currentNode.y + 1), g: currentNode.g + 10, move: moveRight, parent: currentNode.node }
-        let leftNode = { node: arr[currentNode.x][currentNode.y - 1], x: currentNode.x, y: currentNode.y - 1, f: currentNode.g + 10 + huristic(currentNode.x, currentNode.y - 1), g: currentNode.g + 10, move: moveLeft, parent: currentNode.node }
-        let downNode = { node: arr[currentNode.x + 1][currentNode.y], x: currentNode.x + 1, y: currentNode.y, f: currentNode.g + 10 + huristic(currentNode.x + 1, currentNode.y), g: currentNode.g + 10, move: moveDown, parent: currentNode.node }
-        let upNode = { node: arr[currentNode.x - 1][currentNode.y], x: currentNode.x - 1, y: currentNode.y, f: currentNode.g + 10 + huristic(currentNode.x - 1, currentNode.y), g: currentNode.g + 10, move: moveUp, parent: currentNode.node }
-        let rightDownNode = { node: arr[currentNode.x + 1][currentNode.y + 1], x: currentNode.x + 1, y: currentNode.y + 1, f: (currentNode.g + 14) + huristic(currentNode.x + 1, currentNode.y + 1), g: currentNode.g + 14, move: moveRightDown, parent: currentNode.node }
-        let leftUpNode = { node: arr[currentNode.x - 1][currentNode.y - 1], x: currentNode.x - 1, y: currentNode.y - 1, f: (currentNode.g + 14) + huristic(currentNode.x - 1, currentNode.y - 1), g: currentNode.g + 14, move: moveLeftUp, parent: currentNode.node }
-        let leftDownNode = { node: arr[currentNode.x + 1][currentNode.y - 1], x: currentNode.x + 1, y: currentNode.y - 1, f: (currentNode.g + 14) + huristic(currentNode.x + 1, currentNode.y - 1), g: currentNode.g + 14, move: moveLeftDown, parent: currentNode.node }
-        let rightUpNode = { node: arr[currentNode.x - 1][currentNode.y + 1], x: currentNode.x - 1, y: currentNode.y + 1, f: (currentNode.g + 14) + huristic(currentNode.x - 1, currentNode.y + 1), g: currentNode.g + 14, move: moveRightUp, parent: currentNode.node }
+        let rightNode = { node: arr[currentNode.x][currentNode.y + 1], x: currentNode.x, y: currentNode.y + 1, f: currentNode.g + 10 + huristic(currentNode.x, currentNode.y + 1), g: currentNode.g + 10, parent: currentNode.node }
+        let leftNode = { node: arr[currentNode.x][currentNode.y - 1], x: currentNode.x, y: currentNode.y - 1, f: currentNode.g + 10 + huristic(currentNode.x, currentNode.y - 1), g: currentNode.g + 10, parent: currentNode.node }
+        let downNode = { node: arr[currentNode.x + 1][currentNode.y], x: currentNode.x + 1, y: currentNode.y, f: currentNode.g + 10 + huristic(currentNode.x + 1, currentNode.y), g: currentNode.g + 10, parent: currentNode.node }
+        let upNode = { node: arr[currentNode.x - 1][currentNode.y], x: currentNode.x - 1, y: currentNode.y, f: currentNode.g + 10 + huristic(currentNode.x - 1, currentNode.y), g: currentNode.g + 10, parent: currentNode.node }
+        let rightDownNode = { node: arr[currentNode.x + 1][currentNode.y + 1], x: currentNode.x + 1, y: currentNode.y + 1, f: (currentNode.g + 14) + huristic(currentNode.x + 1, currentNode.y + 1), g: currentNode.g + 14, parent: currentNode.node }
+        let leftUpNode = { node: arr[currentNode.x - 1][currentNode.y - 1], x: currentNode.x - 1, y: currentNode.y - 1, f: (currentNode.g + 14) + huristic(currentNode.x - 1, currentNode.y - 1), g: currentNode.g + 14, parent: currentNode.node }
+        let leftDownNode = { node: arr[currentNode.x + 1][currentNode.y - 1], x: currentNode.x + 1, y: currentNode.y - 1, f: (currentNode.g + 14) + huristic(currentNode.x + 1, currentNode.y - 1), g: currentNode.g + 14, parent: currentNode.node }
+        let rightUpNode = { node: arr[currentNode.x - 1][currentNode.y + 1], x: currentNode.x - 1, y: currentNode.y + 1, f: (currentNode.g + 14) + huristic(currentNode.x - 1, currentNode.y + 1), g: currentNode.g + 14, parent: currentNode.node }
 
-        if ((currentNode.x > 0) && (currentNode.y < 79) && !(rightUpNode.node.classList.contains('startPoint')) && !(upNode.node.classList.contains('wall')) && !(rightNode.node.classList.contains('wall')) && !(rightUpNode.node.classList.contains('wall')) && !(rightUpNode.node.classList.contains('searchPath')) && !(closeList.includes(rightUpNode.node))) {
+        if ((upNode.x != 0) && (rightNode.y != 79) && !(rightUpNode.node.classList.contains('startPoint')) && !(upNode.node.classList.contains('wall')) && !(rightNode.node.classList.contains('wall')) && !(rightUpNode.node.classList.contains('wall')) && !(rightUpNode.node.classList.contains('searchPath')) && !(closeList.includes(rightUpNode.node))) {
             if (searchOfArrayObj(openList, rightUpNode.node)) {
                 const index = indexOfArray(openList, rightUpNode.node);
                 if (openList[index].g > rightUpNode.g) {
@@ -195,7 +165,7 @@ function findPath() {
             }
 
         }
-        if ((currentNode.y > 0) && (currentNode.x < 39) && !(leftDownNode.node.classList.contains('startPoint')) && !(downNode.node.classList.contains('wall')) && !(leftNode.node.classList.contains('wall')) && !(leftDownNode.node.classList.contains('wall')) && !(leftDownNode.node.classList.contains('searchPath')) && !(closeList.includes(leftDownNode.node))) {
+        if ((leftNode.y != 0) && (downNode.x != 39) && !(leftDownNode.node.classList.contains('startPoint')) && !(downNode.node.classList.contains('wall')) && !(leftNode.node.classList.contains('wall')) && !(leftDownNode.node.classList.contains('wall')) && !(leftDownNode.node.classList.contains('searchPath')) && !(closeList.includes(leftDownNode.node))) {
             if (searchOfArrayObj(openList, leftDownNode.node)) {
                 const index = indexOfArray(openList, leftDownNode.node);
                 if (openList[index].g > leftDownNode.g) {
@@ -208,7 +178,7 @@ function findPath() {
             }
 
         }
-        if ((currentNode.y > 0) && (currentNode.x > 0) && !(leftUpNode.node.classList.contains('startPoint')) && !(upNode.node.classList.contains('wall')) && !(leftNode.node.classList.contains('wall')) && !(leftUpNode.node.classList.contains('wall')) && !(leftUpNode.node.classList.contains('searchPath')) && !(closeList.includes(leftUpNode.node))) {
+        if ((leftNode.y != 0) && (upNode.x != 0) && !(leftUpNode.node.classList.contains('startPoint')) && !(upNode.node.classList.contains('wall')) && !(leftNode.node.classList.contains('wall')) && !(leftUpNode.node.classList.contains('wall')) && !(leftUpNode.node.classList.contains('searchPath')) && !(closeList.includes(leftUpNode.node))) {
             if (searchOfArrayObj(openList, leftUpNode.node)) {
                 const index = indexOfArray(openList, leftUpNode.node);
                 if (openList[index].g > leftUpNode.g) {
@@ -222,7 +192,7 @@ function findPath() {
 
         }
 
-        if ((currentNode.y < 79) && (currentNode.x < 39) && !(rightDownNode.node.classList.contains('startPoint')) && !(downNode.node.classList.contains('wall')) && !(rightNode.node.classList.contains('wall')) && !(rightDownNode.node.classList.contains('wall')) && !(rightDownNode.node.classList.contains('searchPath')) && !(closeList.includes(rightDownNode.node))) {
+        if ((rightNode.y != 79) && (downNode.x != 39) && !(rightDownNode.node.classList.contains('startPoint')) && !(downNode.node.classList.contains('wall')) && !(rightNode.node.classList.contains('wall')) && !(rightDownNode.node.classList.contains('wall')) && !(rightDownNode.node.classList.contains('searchPath')) && !(closeList.includes(rightDownNode.node))) {
             if (searchOfArrayObj(openList, rightDownNode.node)) {
                 const index = indexOfArray(openList, rightDownNode.node);
                 if (openList[index].g > rightDownNode.g) {
@@ -235,7 +205,7 @@ function findPath() {
             }
 
         }
-        if ((currentNode.y < 79) && !(rightNode.node.classList.contains('startPoint')) && !(rightNode.node.classList.contains('wall')) && !(rightNode.node.classList.contains('searchPath')) && !(closeList.includes(rightNode.node))) {
+        if ((rightNode.y != 79) && !(rightNode.node.classList.contains('startPoint')) && !(rightNode.node.classList.contains('wall')) && !(rightNode.node.classList.contains('searchPath')) && !(closeList.includes(rightNode.node))) {
             if (searchOfArrayObj(openList, rightNode.node)) {
                 const index = indexOfArray(openList, rightNode.node);
                 if (openList[index].g > rightNode.g) {
@@ -248,7 +218,7 @@ function findPath() {
             }
 
         }
-        if ((currentNode.y > 0) && !(leftNode.node.classList.contains('startPoint')) && !(leftNode.node.classList.contains('wall')) && !(leftNode.node.classList.contains('searchPath')) && !(closeList.includes(leftNode.node))) {
+        if ((leftNode.y != 0) && !(leftNode.node.classList.contains('startPoint')) && !(leftNode.node.classList.contains('wall')) && !(leftNode.node.classList.contains('searchPath')) && !(closeList.includes(leftNode.node))) {
             if (searchOfArrayObj(openList, leftNode.node)) {
                 const index = indexOfArray(openList, leftNode.node);
                 if (openList[index].g > leftNode.g) {
@@ -261,7 +231,7 @@ function findPath() {
             }
 
         }
-        if ((currentNode.x < 39) && !(downNode.node.classList.contains('startPoint')) && !(downNode.node.classList.contains('wall')) && !(downNode.node.classList.contains('searchPath')) && !(closeList.includes(downNode.node))) {
+        if ((downNode.x != 39) && !(downNode.node.classList.contains('startPoint')) && !(downNode.node.classList.contains('wall')) && !(downNode.node.classList.contains('searchPath')) && !(closeList.includes(downNode.node))) {
             if (searchOfArrayObj(openList, downNode.node)) {
                 const index = indexOfArray(openList, downNode.node);
                 if (openList[index].g > downNode.g) {
@@ -274,7 +244,7 @@ function findPath() {
             }
 
         }
-        if ((currentNode.x > 0) && !(upNode.node.classList.contains('startPoint')) && !(upNode.node.classList.contains('wall')) && !(upNode.node.classList.contains('searchPath')) && !(closeList.includes(upNode.node))) {
+        if ((upNode.x != 0) && !(upNode.node.classList.contains('startPoint')) && !(upNode.node.classList.contains('wall')) && !(upNode.node.classList.contains('searchPath')) && !(closeList.includes(upNode.node))) {
             if (searchOfArrayObj(openList, upNode.node)) {
                 const index = indexOfArray(openList, upNode.node);
                 if (openList[index].g > upNode.g) {
@@ -308,14 +278,12 @@ function findPath() {
 
         if (openList.length === 0) {
             clearInterval(stopInterval);
+            console.log('stop');
         }
 
-        // console.log('open',openList);
-        // console.log('close', closeList);
-        // console.log('current',currentNode);
         currentNode.node.classList.add('searchPath');
     }
-    stopInterval = setInterval(aStar, 10);
+    stopInterval = setInterval(aStar, 5);
     endNode.node.classList.remove('wall')
 }
 
@@ -331,6 +299,7 @@ function init() {
     createGrid(40, 80);
     setStartPoint(x1, y1);
     setEndPoint(x2, y2);
+    defaultWall()
 }
 
 init();
