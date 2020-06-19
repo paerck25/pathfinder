@@ -315,6 +315,12 @@ function findPath() {
 
 function searchStart() {
     findPath();
+    for (let hang = 1; hang < 39; hang++) {
+        for (let ryul = 1; ryul < 79; ryul++) {
+            arr[hang][ryul].classList.remove('path');
+            arr[hang][ryul].classList.remove('searchPath');
+        };
+    };
 }
 
 document.getElementById('button1').addEventListener('click', randomStartPosition)
