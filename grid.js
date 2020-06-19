@@ -2,10 +2,10 @@ let container = document.getElementById('container');
 let start;
 let end;
 let arr = [];
-let x1 = 10;
-let x2 = 8;
-let y1 = 10;
-let y2 = 12;
+let x1 = parseInt(Math.random() * 38) + 1;
+let x2 = parseInt(Math.random() * 38) + 1;
+let y1 = 1;
+let y2 = 78;
 
 function dragWall(ev) {
     ev.preventDefault();
@@ -61,14 +61,19 @@ function setEndPoint(x, y) {
     end.classList.add('endPoint');
 }
 
-function RandomPosition() {
+function randomStartPosition() {
     x1 = parseInt(Math.random() * 38) + 1
-    x2 = parseInt(Math.random() * 38) + 1
     y1 = parseInt(Math.random() * 78) + 1
-    y2 = parseInt(Math.random() * 78) + 1
-    resetPoint();
+    resetStartPoint();
     setStartPoint(x1, y1);
+}
+
+function randomEndPosition(){
+    x2 = parseInt(Math.random() * 38) + 1
+    y2 = parseInt(Math.random() * 78) + 1
+    resetEndPoint();
     setEndPoint(x2, y2);
+
 }
 
 function createRandomWall() {
@@ -110,10 +115,19 @@ function searchOfArrayObj(ary, item1) {
 
 
 
-function resetPoint() {
+function resetStartPoint() {
     for (let hang = 1; hang < 39; hang++) {
         for (let ryul = 1; ryul < 79; ryul++) {
             arr[hang][ryul].classList.remove('startPoint');
+            arr[hang][ryul].classList.remove('wall');
+            arr[hang][ryul].classList.remove('path');
+            arr[hang][ryul].classList.remove('searchPath');
+        };
+    };
+}
+function resetEndPoint() {
+    for (let hang = 1; hang < 39; hang++) {
+        for (let ryul = 1; ryul < 79; ryul++) {
             arr[hang][ryul].classList.remove('endPoint');
             arr[hang][ryul].classList.remove('wall');
             arr[hang][ryul].classList.remove('path');
@@ -121,6 +135,17 @@ function resetPoint() {
         };
     };
 }
+
+function resetWall() {
+    for (let hang = 1; hang < 39; hang++) {
+        for (let ryul = 1; ryul < 79; ryul++) {
+            arr[hang][ryul].classList.remove('wall');
+            arr[hang][ryul].classList.remove('path');
+            arr[hang][ryul].classList.remove('searchPath');
+        };
+    };
+}
+
 let stopInterval;
 
 function findPath() {
@@ -274,6 +299,7 @@ function findPath() {
 
         if (currentNode.node === endNode.node) {
             clearInterval(stopInterval);
+            console.log('stop');
         }
 
         if (openList.length === 0) {
@@ -291,9 +317,11 @@ function searchStart() {
     findPath();
 }
 
-document.getElementById('button1').addEventListener('click', RandomPosition)
+document.getElementById('button1').addEventListener('click', randomStartPosition)
 document.getElementById('button2').addEventListener('click', searchStart)
 document.getElementById('button3').addEventListener('click', createRandomWall)
+document.getElementById('button4').addEventListener('click', randomEndPosition)
+document.getElementById('button5').addEventListener('click', resetWall)
 
 function init() {
     createGrid(40, 80);
