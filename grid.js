@@ -51,10 +51,10 @@ function setEndPoint(x, y) {
 }
 
 function RandomPosition() {
-    x1 = parseInt(Math.random() * 18) + 1
-    x2 = parseInt(Math.random() * 18) + 1
-    y1 = parseInt(Math.random() * 38) + 1
-    y2 = parseInt(Math.random() * 38) + 1
+    x1 = parseInt(Math.random() * 38) + 1
+    x2 = parseInt(Math.random() * 38) + 1
+    y1 = parseInt(Math.random() * 78) + 1
+    y2 = parseInt(Math.random() * 78) + 1
     resetPoint();
     setStartPoint(x1, y1);
     setEndPoint(x2, y2);
@@ -103,9 +103,9 @@ function moveRightDown() {
 
 function createRandomWall() {
     for (let j = 0; j < 5; j++) {
-        for (let i = 0; i < 19; i++) {
-            if (!(arr[i][parseInt(Math.random() * 39)].classList.contains('endPoint'))) {
-                arr[i][parseInt(Math.random() * 39)].classList.add('wall');
+        for (let i = 0; i < 39; i++) {
+            if (!(arr[i][parseInt(Math.random() * 79)].classList.contains('endPoint'))) {
+                arr[i][parseInt(Math.random() * 79)].classList.add('wall');
             } else {
                 return;
             }
@@ -141,8 +141,8 @@ function searchOfArrayObj(ary, item1) {
 
 
 function resetPoint() {
-    for (let hang = 0; hang < 20; hang++) {
-        for (let ryul = 0; ryul < 40; ryul++) {
+    for (let hang = 0; hang < 40; hang++) {
+        for (let ryul = 0; ryul < 80; ryul++) {
             arr[hang][ryul].classList.remove('startPoint');
             arr[hang][ryul].classList.remove('endPoint');
             arr[hang][ryul].classList.remove('wall');
@@ -182,7 +182,7 @@ function findPath() {
         let leftDownNode = { node: arr[currentNode.x + 1][currentNode.y - 1], x: currentNode.x + 1, y: currentNode.y - 1, f: (currentNode.g + 14) + huristic(currentNode.x + 1, currentNode.y - 1), g: currentNode.g + 14, move: moveLeftDown, parent: currentNode.node }
         let rightUpNode = { node: arr[currentNode.x - 1][currentNode.y + 1], x: currentNode.x - 1, y: currentNode.y + 1, f: (currentNode.g + 14) + huristic(currentNode.x - 1, currentNode.y + 1), g: currentNode.g + 14, move: moveRightUp, parent: currentNode.node }
 
-        if ((currentNode.x > 0) && (currentNode.y < 39) && !(rightUpNode.node.classList.contains('startPoint')) && !(upNode.node.classList.contains('wall')) && !(rightNode.node.classList.contains('wall')) && !(rightUpNode.node.classList.contains('wall')) && !(rightUpNode.node.classList.contains('searchPath')) && !(closeList.includes(rightUpNode.node))) {
+        if ((currentNode.x > 0) && (currentNode.y < 79) && !(rightUpNode.node.classList.contains('startPoint')) && !(upNode.node.classList.contains('wall')) && !(rightNode.node.classList.contains('wall')) && !(rightUpNode.node.classList.contains('wall')) && !(rightUpNode.node.classList.contains('searchPath')) && !(closeList.includes(rightUpNode.node))) {
             if (searchOfArrayObj(openList, rightUpNode.node)) {
                 const index = indexOfArray(openList, rightUpNode.node);
                 if (openList[index].g > rightUpNode.g) {
@@ -195,7 +195,7 @@ function findPath() {
             }
 
         }
-        if ((currentNode.y > 0) && (currentNode.x < 19) && !(leftDownNode.node.classList.contains('startPoint')) && !(downNode.node.classList.contains('wall')) && !(leftNode.node.classList.contains('wall')) && !(leftDownNode.node.classList.contains('wall')) && !(leftDownNode.node.classList.contains('searchPath')) && !(closeList.includes(leftDownNode.node))) {
+        if ((currentNode.y > 0) && (currentNode.x < 39) && !(leftDownNode.node.classList.contains('startPoint')) && !(downNode.node.classList.contains('wall')) && !(leftNode.node.classList.contains('wall')) && !(leftDownNode.node.classList.contains('wall')) && !(leftDownNode.node.classList.contains('searchPath')) && !(closeList.includes(leftDownNode.node))) {
             if (searchOfArrayObj(openList, leftDownNode.node)) {
                 const index = indexOfArray(openList, leftDownNode.node);
                 if (openList[index].g > leftDownNode.g) {
@@ -222,7 +222,7 @@ function findPath() {
 
         }
 
-        if ((currentNode.y < 39) && (currentNode.x < 19) && !(rightDownNode.node.classList.contains('startPoint')) && !(downNode.node.classList.contains('wall')) && !(rightNode.node.classList.contains('wall')) && !(rightDownNode.node.classList.contains('wall')) && !(rightDownNode.node.classList.contains('searchPath')) && !(closeList.includes(rightDownNode.node))) {
+        if ((currentNode.y < 79) && (currentNode.x < 39) && !(rightDownNode.node.classList.contains('startPoint')) && !(downNode.node.classList.contains('wall')) && !(rightNode.node.classList.contains('wall')) && !(rightDownNode.node.classList.contains('wall')) && !(rightDownNode.node.classList.contains('searchPath')) && !(closeList.includes(rightDownNode.node))) {
             if (searchOfArrayObj(openList, rightDownNode.node)) {
                 const index = indexOfArray(openList, rightDownNode.node);
                 if (openList[index].g > rightDownNode.g) {
@@ -235,7 +235,7 @@ function findPath() {
             }
 
         }
-        if ((currentNode.y < 39) && !(rightNode.node.classList.contains('startPoint')) && !(rightNode.node.classList.contains('wall')) && !(rightNode.node.classList.contains('searchPath')) && !(closeList.includes(rightNode.node))) {
+        if ((currentNode.y < 79) && !(rightNode.node.classList.contains('startPoint')) && !(rightNode.node.classList.contains('wall')) && !(rightNode.node.classList.contains('searchPath')) && !(closeList.includes(rightNode.node))) {
             if (searchOfArrayObj(openList, rightNode.node)) {
                 const index = indexOfArray(openList, rightNode.node);
                 if (openList[index].g > rightNode.g) {
@@ -261,7 +261,7 @@ function findPath() {
             }
 
         }
-        if ((currentNode.x < 19) && !(downNode.node.classList.contains('startPoint')) && !(downNode.node.classList.contains('wall')) && !(downNode.node.classList.contains('searchPath')) && !(closeList.includes(downNode.node))) {
+        if ((currentNode.x < 39) && !(downNode.node.classList.contains('startPoint')) && !(downNode.node.classList.contains('wall')) && !(downNode.node.classList.contains('searchPath')) && !(closeList.includes(downNode.node))) {
             if (searchOfArrayObj(openList, downNode.node)) {
                 const index = indexOfArray(openList, downNode.node);
                 if (openList[index].g > downNode.g) {
@@ -328,7 +328,7 @@ document.getElementById('button2').addEventListener('click', searchStart)
 document.getElementById('button3').addEventListener('click', createRandomWall)
 
 function init() {
-    createGrid(20, 40);
+    createGrid(40, 80);
     setStartPoint(x1, y1);
     setEndPoint(x2, y2);
 }
