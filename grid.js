@@ -51,10 +51,10 @@ function setEndPoint(x, y) {
 }
 
 function RandomPosition() {
-    x1 = parseInt(Math.random() * 18)+1
-    x2 = parseInt(Math.random() * 18)+1
-    y1 = parseInt(Math.random() * 38)+1
-    y2 = parseInt(Math.random() * 38)+1
+    x1 = parseInt(Math.random() * 18) + 1
+    x2 = parseInt(Math.random() * 18) + 1
+    y1 = parseInt(Math.random() * 38) + 1
+    y2 = parseInt(Math.random() * 38) + 1
     resetPoint();
     setStartPoint(x1, y1);
     setEndPoint(x2, y2);
@@ -119,17 +119,7 @@ function huristic(sx, sy) {
     return (a + b) * 10;
 }
 
-function getCost(cx, cy, ex, ey) {
-    let a = Math.abs(cx - ex);
-    let b = Math.abs(cy - ey)
-    return (a + b) * 10;
-}
 
-function getCosts(cx, cy, ex, ey) {
-    let a = Math.abs(cx - ex);
-    let b = Math.abs(cy - ey)
-    return (a + b) * 14;
-}
 
 function indexOfArray(ary, item) {
     for (let i = 0; i < ary.length; i++) {
@@ -164,17 +154,12 @@ function resetPoint() {
 let stopInterval;
 
 function findPath() {
-    let run = true;
     let openList = [];
     let closeList = [];
     let pathList = [];
     let currentNode;
     const startNode = { node: arr[x1][y1], x: x1, y: y1, f: 0, g: 0 }
     const endNode = { node: arr[x2][y2], x: x2, y: y2, f: 0, g: 0 }
-    const startX = x1;
-    const startY = y1;
-    const endX = x2;
-    const endY = y2;
     openList.push(startNode);
     function aStar() {
         openList.sort(function (a, b) {
@@ -185,84 +170,65 @@ function findPath() {
         closeList.push(currentNode);
 
         if (openList.length > 0) {
-            pathList.push(currentNode.parent);
+            pathList.push(currentNode);
         }
 
-        let rightNode = { node: arr[currentNode.x][currentNode.y + 1], x: currentNode.x, y: currentNode.y + 1, f: getCost(currentNode.x, currentNode.y + 1, startX, startY) + huristic(currentNode.x, currentNode.y + 1), g: getCost(currentNode.x, currentNode.y + 1, startX, startY), move: moveRight, parent: currentNode.node }
-        let leftNode = { node: arr[currentNode.x][currentNode.y - 1], x: currentNode.x, y: currentNode.y - 1, f: getCost(currentNode.x, currentNode.y - 1, startX, startY) + huristic(currentNode.x, currentNode.y - 1), g: getCost(currentNode.x, currentNode.y - 1, startX, startY), move: moveLeft, parent: currentNode.node }
-        let downNode = { node: arr[currentNode.x + 1][currentNode.y], x: currentNode.x + 1, y: currentNode.y, f: getCost(currentNode.x + 1, currentNode.y, startX, startY) + huristic(currentNode.x + 1, currentNode.y), g: getCost(currentNode.x + 1, currentNode.y, startX, startY), move: moveDown, parent: currentNode.node }
-        let upNode = { node: arr[currentNode.x - 1][currentNode.y], x: currentNode.x - 1, y: currentNode.y, f: getCost(currentNode.x - 1, currentNode.y, startX, startY) + huristic(currentNode.x - 1, currentNode.y), g: getCost(currentNode.x - 1, currentNode.y, startX, startY), move: moveUp, parent: currentNode.node }
-        let rightDownNode = { node: arr[currentNode.x + 1][currentNode.y + 1], x: currentNode.x + 1, y: currentNode.y + 1, f: getCosts(currentNode.x + 1, currentNode.y + 1, startX, startY) + huristic(currentNode.x + 1, currentNode.y + 1), g: getCosts(currentNode.x + 1, currentNode.y + 1, startX, startY), move: moveRightDown, parent: currentNode.node }
-        let leftUpNode = { node: arr[currentNode.x - 1][currentNode.y - 1], x: currentNode.x - 1, y: currentNode.y - 1, f: getCosts(currentNode.x - 1, currentNode.y - 1, startX, startY) + huristic(currentNode.x - 1, currentNode.y - 1), g: getCosts(currentNode.x - 1, currentNode.y - 1, startX, startY), move: moveLeftUp, parent: currentNode.node }
-        let leftDownNode = { node: arr[currentNode.x + 1][currentNode.y - 1], x: currentNode.x + 1, y: currentNode.y - 1, f: getCosts(currentNode.x + 1, currentNode.y - 1, startX, startY) + huristic(currentNode.x + 1, currentNode.y - 1), g: getCosts(currentNode.x + 1, currentNode.y - 1, startX, startY), move: moveLeftDown, parent: currentNode.node }
-        let rightUpNode = { node: arr[currentNode.x - 1][currentNode.y + 1], x: currentNode.x - 1, y: currentNode.y + 1, f: getCosts(currentNode.x - 1, currentNode.y + 1, startX, startY) + huristic(currentNode.x - 1, currentNode.y + 1), g: getCosts(currentNode.x - 1, currentNode.y + 1, startX, startY), move: moveRightUp, parent: currentNode.node }
+        let rightNode = { node: arr[currentNode.x][currentNode.y + 1], x: currentNode.x, y: currentNode.y + 1, f: currentNode.g + 10 + huristic(currentNode.x, currentNode.y + 1), g: currentNode.g + 10, move: moveRight, parent: currentNode.node }
+        let leftNode = { node: arr[currentNode.x][currentNode.y - 1], x: currentNode.x, y: currentNode.y - 1, f: currentNode.g + 10 + huristic(currentNode.x, currentNode.y - 1), g: currentNode.g + 10, move: moveLeft, parent: currentNode.node }
+        let downNode = { node: arr[currentNode.x + 1][currentNode.y], x: currentNode.x + 1, y: currentNode.y, f: currentNode.g + 10 + huristic(currentNode.x + 1, currentNode.y), g: currentNode.g + 10, move: moveDown, parent: currentNode.node }
+        let upNode = { node: arr[currentNode.x - 1][currentNode.y], x: currentNode.x - 1, y: currentNode.y, f: currentNode.g + 10 + huristic(currentNode.x - 1, currentNode.y), g: currentNode.g + 10, move: moveUp, parent: currentNode.node }
+        let rightDownNode = { node: arr[currentNode.x + 1][currentNode.y + 1], x: currentNode.x + 1, y: currentNode.y + 1, f: (currentNode.g + 14) + huristic(currentNode.x + 1, currentNode.y + 1), g: currentNode.g + 14, move: moveRightDown, parent: currentNode.node }
+        let leftUpNode = { node: arr[currentNode.x - 1][currentNode.y - 1], x: currentNode.x - 1, y: currentNode.y - 1, f: (currentNode.g + 14) + huristic(currentNode.x - 1, currentNode.y - 1), g: currentNode.g + 14, move: moveLeftUp, parent: currentNode.node }
+        let leftDownNode = { node: arr[currentNode.x + 1][currentNode.y - 1], x: currentNode.x + 1, y: currentNode.y - 1, f: (currentNode.g + 14) + huristic(currentNode.x + 1, currentNode.y - 1), g: currentNode.g + 14, move: moveLeftDown, parent: currentNode.node }
+        let rightUpNode = { node: arr[currentNode.x - 1][currentNode.y + 1], x: currentNode.x - 1, y: currentNode.y + 1, f: (currentNode.g + 14) + huristic(currentNode.x - 1, currentNode.y + 1), g: currentNode.g + 14, move: moveRightUp, parent: currentNode.node }
 
-        if ((currentNode.x > 0)&&(currentNode.y < 39)&&!(rightUpNode.node.classList.contains('startPoint')) && !(upNode.node.classList.contains('wall')) && !(rightNode.node.classList.contains('wall')) && !(rightUpNode.node.classList.contains('wall')) && !(rightUpNode.node.classList.contains('searchPath')) && !(closeList.includes(rightUpNode.node))) {
+        if ((currentNode.x > 0) && (currentNode.y < 39) && !(rightUpNode.node.classList.contains('startPoint')) && !(upNode.node.classList.contains('wall')) && !(rightNode.node.classList.contains('wall')) && !(rightUpNode.node.classList.contains('wall')) && !(rightUpNode.node.classList.contains('searchPath')) && !(closeList.includes(rightUpNode.node))) {
             if (searchOfArrayObj(openList, rightUpNode.node)) {
                 const index = indexOfArray(openList, rightUpNode.node);
-                console.log(index);
-                console.log(openList[index].g);
-                console.log(getCost(rightUpNode.x, rightUpNode.y, startX, startY));
-                if (openList[index].g > getCost(rightUpNode.x, rightUpNode.y, startX, startY)) {
-                    console.log(openList[index]);
+                if (openList[index].g > rightUpNode.g) {
                     openList[index].parent = currentNode.node;
                     openList[index].g = rightUpNode.g;
                     openList[index].f = rightUpNode.f;
-                    console.log(openList[index]);
                 }
             } else {
                 openList.push(rightUpNode);
             }
 
         }
-        if ((currentNode.y > 0) &&(currentNode.x < 19)&&!(leftDownNode.node.classList.contains('startPoint')) && !(downNode.node.classList.contains('wall')) && !(leftNode.node.classList.contains('wall')) && !(leftDownNode.node.classList.contains('wall')) && !(leftDownNode.node.classList.contains('searchPath')) && !(closeList.includes(leftDownNode.node))) {
+        if ((currentNode.y > 0) && (currentNode.x < 19) && !(leftDownNode.node.classList.contains('startPoint')) && !(downNode.node.classList.contains('wall')) && !(leftNode.node.classList.contains('wall')) && !(leftDownNode.node.classList.contains('wall')) && !(leftDownNode.node.classList.contains('searchPath')) && !(closeList.includes(leftDownNode.node))) {
             if (searchOfArrayObj(openList, leftDownNode.node)) {
                 const index = indexOfArray(openList, leftDownNode.node);
-                console.log(index);
-                console.log(openList[index].g);
-                console.log(getCost(leftDownNode.x, leftDownNode.y, startX, startY));
-                if (openList[index].g > getCost(leftDownNode.x, leftDownNode.y, startX, startY)) {
-                    console.log(openList[index]);
+                if (openList[index].g > leftDownNode.g) {
                     openList[index].parent = currentNode.node;
                     openList[index].g = leftDownNode.g;
                     openList[index].f = leftDownNode.f;
-                    console.log(openList[index]);
                 }
             } else {
                 openList.push(leftDownNode);
             }
 
         }
-        if ((currentNode.y > 0) &&(currentNode.x > 0)&&!(leftUpNode.node.classList.contains('startPoint')) && !(upNode.node.classList.contains('wall')) && !(leftNode.node.classList.contains('wall')) && !(leftUpNode.node.classList.contains('wall')) && !(leftUpNode.node.classList.contains('searchPath')) && !(closeList.includes(leftUpNode.node))) {
+        if ((currentNode.y > 0) && (currentNode.x > 0) && !(leftUpNode.node.classList.contains('startPoint')) && !(upNode.node.classList.contains('wall')) && !(leftNode.node.classList.contains('wall')) && !(leftUpNode.node.classList.contains('wall')) && !(leftUpNode.node.classList.contains('searchPath')) && !(closeList.includes(leftUpNode.node))) {
             if (searchOfArrayObj(openList, leftUpNode.node)) {
                 const index = indexOfArray(openList, leftUpNode.node);
-                console.log(index);
-                console.log(openList[index].g);
-                console.log(getCost(leftUpNode.x, leftUpNode.y, startX, startY));
-                if (openList[index].g > getCost(leftUpNode.x, leftUpNode.y, startX, startY)) {
-                    console.log(openList[index]);
+                if (openList[index].g > leftUpNode.g) {
                     openList[index].parent = currentNode.node;
                     openList[index].g = leftUpNode.g;
                     openList[index].f = leftUpNode.f;
-                    console.log(openList[index]);
                 }
             } else {
                 openList.push(leftUpNode);
             }
 
         }
-        if ((currentNode.y < 39)&&(currentNode.x < 19)&&!(rightDownNode.node.classList.contains('startPoint')) && !(downNode.node.classList.contains('wall')) && !(rightNode.node.classList.contains('wall')) && !(rightDownNode.node.classList.contains('wall')) && !(rightDownNode.node.classList.contains('searchPath')) && !(closeList.includes(rightDownNode.node))) {
+
+        if ((currentNode.y < 39) && (currentNode.x < 19) && !(rightDownNode.node.classList.contains('startPoint')) && !(downNode.node.classList.contains('wall')) && !(rightNode.node.classList.contains('wall')) && !(rightDownNode.node.classList.contains('wall')) && !(rightDownNode.node.classList.contains('searchPath')) && !(closeList.includes(rightDownNode.node))) {
             if (searchOfArrayObj(openList, rightDownNode.node)) {
                 const index = indexOfArray(openList, rightDownNode.node);
-                console.log(index);
-                console.log(openList[index].g);
-                console.log(getCost(rightDownNode.x, rightDownNode.y, startX, startY));
-                if (openList[index].g > getCost(rightDownNode.x, rightDownNode.y, startX, startY)) {
-                    console.log(openList[index]);
+                if (openList[index].g > rightDownNode.g) {
                     openList[index].parent = currentNode.node;
                     openList[index].g = rightDownNode.g;
                     openList[index].f = rightDownNode.f;
-                    console.log(openList[index]);
                 }
             } else {
                 openList.push(rightDownNode);
@@ -272,33 +238,23 @@ function findPath() {
         if ((currentNode.y < 39) && !(rightNode.node.classList.contains('startPoint')) && !(rightNode.node.classList.contains('wall')) && !(rightNode.node.classList.contains('searchPath')) && !(closeList.includes(rightNode.node))) {
             if (searchOfArrayObj(openList, rightNode.node)) {
                 const index = indexOfArray(openList, rightNode.node);
-                console.log(index);
-                console.log(openList[index].g);
-                console.log(getCost(rightNode.x, rightNode.y, startX, startY));
-                if (openList[index].g > getCost(rightNode.x, rightNode.y, startX, startY)) {
-                    console.log(openList[index]);
+                if (openList[index].g > rightNode.g) {
                     openList[index].parent = currentNode.node;
                     openList[index].g = rightNode.g;
                     openList[index].f = rightNode.f;
-                    console.log(openList[index]);
                 }
             } else {
                 openList.push(rightNode);
             }
 
         }
-        if ( (currentNode.y > 0)&& !(leftNode.node.classList.contains('startPoint')) && !(leftNode.node.classList.contains('wall')) && !(leftNode.node.classList.contains('searchPath')) && !(closeList.includes(leftNode.node))) {
+        if ((currentNode.y > 0) && !(leftNode.node.classList.contains('startPoint')) && !(leftNode.node.classList.contains('wall')) && !(leftNode.node.classList.contains('searchPath')) && !(closeList.includes(leftNode.node))) {
             if (searchOfArrayObj(openList, leftNode.node)) {
                 const index = indexOfArray(openList, leftNode.node);
-                console.log(index);
-                console.log(openList[index].g);
-                console.log(getCost(leftNode.x, leftNode.y, startX, startY));
-                if (openList[index].g > getCost(leftNode.x, leftNode.y, startX, startY)) {
-                    console.log(openList[index]);
+                if (openList[index].g > leftNode.g) {
                     openList[index].parent = currentNode.node;
                     openList[index].g = leftNode.g;
                     openList[index].f = leftNode.f;
-                    console.log(openList[index]);
                 }
             } else {
                 openList.push(leftNode);
@@ -308,15 +264,10 @@ function findPath() {
         if ((currentNode.x < 19) && !(downNode.node.classList.contains('startPoint')) && !(downNode.node.classList.contains('wall')) && !(downNode.node.classList.contains('searchPath')) && !(closeList.includes(downNode.node))) {
             if (searchOfArrayObj(openList, downNode.node)) {
                 const index = indexOfArray(openList, downNode.node);
-                console.log(index);
-                console.log(openList[index].g);
-                console.log(getCost(downNode.x, downNode.y, startX, startY));
-                if (openList[index].g > getCost(downNode.x, downNode.y, startX, startY)) {
-                    console.log(openList[index]);
+                if (openList[index].g > downNode.g) {
                     openList[index].parent = currentNode.node;
                     openList[index].g = downNode.g;
                     openList[index].f = downNode.f;
-                    console.log(openList[index]);
                 }
             } else {
                 openList.push(downNode);
@@ -326,15 +277,10 @@ function findPath() {
         if ((currentNode.x > 0) && !(upNode.node.classList.contains('startPoint')) && !(upNode.node.classList.contains('wall')) && !(upNode.node.classList.contains('searchPath')) && !(closeList.includes(upNode.node))) {
             if (searchOfArrayObj(openList, upNode.node)) {
                 const index = indexOfArray(openList, upNode.node);
-                console.log(index);
-                console.log(openList[index].g);
-                console.log(getCost(upNode.x, upNode.y, startX, startY));
-                if (openList[index].g > getCost(upNode.x, upNode.y, startX, startY)) {
-                    console.log(openList[index]);
+                if (openList[index].g > upNode.g) {
                     openList[index].parent = currentNode.node;
                     openList[index].g = upNode.g;
                     openList[index].f = upNode.f;
-                    console.log(openList[index]);
                 }
             } else {
                 openList.push(upNode);
@@ -342,22 +288,35 @@ function findPath() {
 
         }
         if (currentNode.node === endNode.node) {
-            for (let i = 0; i < pathList.length; i++) {
-                pathList[i].classList.add('path');
+            let pathNode = currentNode
+            let finalList = []
+            const length = pathList.length;
+            console.log(length);
+            for (let i = 0; i < length; i++) {
+                finalList.push(pathNode.parent);
+                let a = pathList.pop();
+                if (a.node === pathNode.parent) {
+                    pathNode = a;
+                }
+                finalList[i].classList.add('path');
             }
-            clearInterval(stopInterval)
         }
-        if(openList.length === 0){
-                clearInterval(stopInterval);
-            }
 
-        console.log('open',openList);
+        if (currentNode.node === endNode.node) {
+            clearInterval(stopInterval);
+        }
+
+        if (openList.length === 0) {
+            clearInterval(stopInterval);
+        }
+
+        // console.log('open',openList);
         // console.log('close', closeList);
         // console.log('current',currentNode);
         currentNode.node.classList.add('searchPath');
     }
     stopInterval = setInterval(aStar, 10);
-    arr[endX][endY].classList.remove('wall')
+    endNode.node.classList.remove('wall')
 }
 
 function searchStart() {
